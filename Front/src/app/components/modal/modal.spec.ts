@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { footer } from './footer';
+import { Modal } from './modal';
 
-describe('footer', () => {
-  let component: footer;
-  let fixture: ComponentFixture<footer>;
+describe('Modal', () => {
+  let component: Modal;
+  let fixture: ComponentFixture<Modal>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [footer],
+      imports: [Modal],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(footer);
+    fixture = TestBed.createComponent(Modal);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
