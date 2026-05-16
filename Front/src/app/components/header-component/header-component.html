@@ -1,0 +1,16 @@
+<header>
+    <div class="dropdown-menu-open-button" (click)="toggleMenu()">
+        <lucide-icon name="TextAlignJustify"></lucide-icon>
+    </div>
+</header>
+@if (isMenuOpen) {
+<nav>
+    <ul class="dropdown-menu">
+        <li><a href="#">бла</a></li>
+        <li><a href="#">блабла</a></li>
+        <li><a href="#">блаблабла</a></li>
+    </ul>
+</nav>
+
+<div class="overlay"  (click)="toggleMenu()"></div>
+}
