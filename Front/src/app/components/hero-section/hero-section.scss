@@ -1,0 +1,49 @@
+.hero-section {
+  display: block;
+  width: 100%;
+  height: 700px;
+  background-image: url('/main-hero-section-img.png');
+  background-size: cover; /* Картинка масштабируется так, чтобы поместиться целиком */
+  background-repeat: no-repeat; /* Отключаем размножение картинки */
+  background-position: center; /* Центрируем картинку в блоке */
+  .hero-content {
+    color: var(--color-bg-main);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
+    justify-content: center;
+    h1 {
+      font-family: 'Playfair Display';
+      font-size: 10vw;
+      font-weight: 100;
+      border-bottom: 1px solid var(--color-bg-main);
+    }
+    p {
+      font-family: 'Playfair Display';
+      font-size: 2.5vw;
+    }
+    .catalog-link-button {
+      margin-top: 5vw;
+      width: 15vw;
+      height: auto;
+      padding: 10px 0 10px 0;
+      background: var(--color-accent-dark-emerald);
+      color: var(--color-bg-main);
+      font-size: 1.5rem;
+      font-family: 'Inter';
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer; /* Курсор в виде пальца */
+      transition: all 0.5s ease; /* Плавность анимации */
+    }
+    .catalog-link-button:hover {
+      background: var(--color-accent-sale);
+      transform: scale(1.1); /* Увеличивает кнопку на 10% */
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
