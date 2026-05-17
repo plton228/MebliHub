@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { LucideAngularModule, TextAlignJustify } from 'lucide-angular';
+import {
+  LucideAngularModule,
+  TextAlignJustify,
+  Search,
+  ShoppingBasket,
+  User,
+} from 'lucide-angular';
 
 @Component({
   selector: 'app-header-component',

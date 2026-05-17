@@ -25,6 +25,7 @@ body {
     text-rendering: optimizeSpeed;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    padding-top: 15vh; /* Отступ для фиксованного хедера */
 }
 
 /* 4. Упрощаем работу со ссылками без классов */
@@ -77,6 +78,8 @@ select {
     --color-text-main: #2C221E;
     /* Темный текст ГОРЬКИЙ ШОКОЛАД*/
 
+    --color-accent-dark-emerald: #0a2916;
+    // темніший, ніж темно-смарагдовий 
     --color-accent-emerald: #0F3A20;
     /* Тёмно-изумрудный (главный) */
     --color-accent-wood: #8C6239;
