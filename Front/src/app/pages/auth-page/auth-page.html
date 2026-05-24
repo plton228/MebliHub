@@ -1,0 +1,66 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>MebliHub</h1>
+
+    <div class="tabs">
+      <button [class.active]="tab === 'login'" (click)="switchTab('login')">Вхід</button>
+      <button [class.active]="tab === 'register'" (click)="switchTab('register')">Реєстрація</button>
+    </div>
+
+    @if (error) {
+      <div class="error-msg">{{ error }}</div>
+    }
+
+    @if (tab === 'login') {
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+        <div class="field">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="login.email" name="email"
+                 required placeholder="your@email.com">
+        </div>
+        <div class="field">
+          <label>Пароль</label>
+          <input type="password" [(ngModel)]="login.password" name="password"
+                 required placeholder="••••••••">
+        </div>
+        <button type="submit" class="submit-btn" [disabled]="loading || !loginForm.valid">
+          {{ loading ? 'Завантаження...' : 'Увійти' }}
+        </button>
+      </form>
+    }
+
+    @if (tab === 'register') {
+      <form (ngSubmit)="onRegister()" #regForm="ngForm">
+        <div class="fields-row">
+          <div class="field">
+            <label>Ім'я</label>
+            <input type="text" [(ngModel)]="reg.name" name="name"
+                   required placeholder="Іван">
+          </div>
+          <div class="field">
+            <label>Прізвище</label>
+            <input type="text" [(ngModel)]="reg.lastName" name="lastName"
+                   required placeholder="Петренко">
+          </div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="reg.email" name="email"
+                 required placeholder="your@email.com">
+        </div>
+        <div class="field">
+          <label>Пароль</label>
+          <input type="password" [(ngModel)]="reg.password" name="password"
+                 required minlength="6" placeholder="Мінімум 6 символів">
+        </div>
+        <button type="submit" class="submit-btn" [disabled]="loading || !regForm.valid">
+          {{ loading ? 'Завантаження...' : 'Зареєструватись' }}
+        </button>
+      </form>
+    }
+
+    <p class="back-link">
+      <a routerLink="/">← Повернутись до каталогу</a>
+    </p>
+  </div>
+</div>

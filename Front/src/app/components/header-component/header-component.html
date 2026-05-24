@@ -1,49 +1,76 @@
 <header>
-    <div class="dropdown-menu-open-button" (click)="toggleMenu()">
-        <lucide-icon [size]="35" class="ico" name="TextAlignJustify"></lucide-icon>
-    </div>
-    <a href=""><p>M<span class="hidden-text">ebli-</span>H<span class="hidden-text">ub</span></p></a>
-    <div class="header-control-buttons">
-        <ul>
-            <li>
-                <a href="">
-                    <lucide-icon [size]="35" class="ico" name="Search"></lucide-icon>
-                </a>
-            <li>
-            <li>
-                <a href="">
-                    <lucide-icon [size]="35" class="ico" name="ShoppingBasket"></lucide-icon>
-                </a>
-            <li>
-            <li>
-                <a href="">
-                    <lucide-icon [size]="35" class="ico" name="User"></lucide-icon>
-                </a>
-            <li>
-        </ul>
-    </div>
+  <div class="dropdown-menu-open-button" (click)="toggleMenu()">
+    <lucide-icon [size]="35" class="ico" name="TextAlignJustify"></lucide-icon>
+  </div>
+
+  <a routerLink="/" (click)="closeMenus()">
+    <p>M<span class="hidden-text">ebli-</span>H<span class="hidden-text">ub</span></p>
+  </a>
+
+  <div class="header-control-buttons">
+    <ul>
+      <li>
+        <a routerLink="/" fragment="catalog" (click)="closeMenus()">
+          <lucide-icon [size]="35" class="ico" name="Search"></lucide-icon>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/cart" (click)="closeMenus()" class="cart-link">
+          <lucide-icon [size]="35" class="ico" name="ShoppingBasket"></lucide-icon>
+          @if (cartCount > 0) {
+            <span class="cart-badge">{{ cartCount }}</span>
+          }
+        </a>
+      </li>
+      <li class="user-menu-wrapper">
+        @if (isLoggedIn) {
+          <button class="icon-btn" (click)="toggleUserMenu()">
+            <lucide-icon [size]="35" class="ico" name="User"></lucide-icon>
+          </button>
+          @if (isUserMenuOpen) {
+            <div class="user-dropdown">
+              <span class="user-email">{{ userEmail }}</span>
+              <a routerLink="/account" (click)="closeMenus()">Мій акаунт</a>
+              @if (isAdmin) {
+                <a routerLink="/admin" (click)="closeMenus()">Адмін панель</a>
+              }
+              <button (click)="logout()">
+                <lucide-icon [size]="16" name="LogOut"></lucide-icon>
+                Вийти
+              </button>
+            </div>
+          }
+        } @else {
+          <a routerLink="/auth" (click)="closeMenus()">
+            <lucide-icon [size]="35" class="ico" name="User"></lucide-icon>
+          </a>
+        }
+      </li>
+    </ul>
+  </div>
 </header>
 
 <nav class="dropdown-container" [class.open]="isMenuOpen">
-    <div class="dropdown-menu">
-        <section class="categories-list-section">
-            <h2>Категорії</h2>
-            <ul>
-                <li><a href="#">Кухня</a></li>
-                <li><a href="#">Вітальня</a></li>
-                <li><a href="#">Спальня</a></li>
-            </ul>
-        </section>
-        <section class="contacts-section">
-            <h2>Контакти</h2>
-            <ul class="contacts-a-list">
-                <li><a href="">Telegram</a></li>
-                <li><a href="">Whatsapp</a></li>
-                <li><a href="">Tiktok</a></li>
-                <li><a href="">Instagram</a></li>
-            </ul>
-        </section>
-    </div>
+  <div class="dropdown-menu">
+    <section class="categories-list-section">
+      <h2>Категорії</h2>
+      <ul>
+        <li><a href="#" (click)="closeMenus()">Кухня</a></li>
+        <li><a href="#" (click)="closeMenus()">Вітальня</a></li>
+        <li><a href="#" (click)="closeMenus()">Спальня</a></li>
+      </ul>
+    </section>
+    <section class="contacts-section">
+      <h2>Контакти</h2>
+      <ul class="contacts-a-list">
+        <li><a href="#">Telegram</a></li>
+        <li><a href="#">Whatsapp</a></li>
+        <li><a href="#">Tiktok</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </section>
+  </div>
 </nav>
 
-<div class="overlay" [class.open]="isMenuOpen" (mouseenter)="toggleMenu()"></div>
+<div class="overlay" [class.open]="isMenuOpen || isUserMenuOpen"
+     (click)="closeMenus()"></div>

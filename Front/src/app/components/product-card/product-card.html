@@ -1,0 +1,30 @@
+<div class="product-card">
+  <div class="product-image">
+    @if (product.imageUrl) {
+      <img [src]="product.imageUrl" [alt]="product.name" />
+    } @else {
+      <div class="product-image-placeholder">
+        <lucide-icon [size]="48" name="Package"></lucide-icon>
+      </div>
+    }
+    @if (!inStock) {
+      <span class="out-of-stock-badge">Немає в наявності</span>
+    }
+  </div>
+
+  <div class="product-info">
+    <h3 class="product-name">{{ product.name }}</h3>
+    @if (product.description) {
+      <p class="product-desc">{{ product.description }}</p>
+    }
+    <div class="product-footer">
+      <span class="product-price">{{ formattedPrice }}</span>
+      <button class="add-to-cart-btn"
+              [disabled]="!inStock"
+              (click)="onAddToCart()">
+        <lucide-icon [size]="16" name="ShoppingCart"></lucide-icon>
+        В кошик
+      </button>
+    </div>
+  </div>
+</div>

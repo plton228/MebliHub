@@ -1,1 +1,63 @@
-<p>cart works!</p>
+<div class="cart-page">
+  <div class="cart-container">
+    <h1>Кошик</h1>
+
+    @if (success) {
+      <div class="success-banner">
+        <lucide-icon [size]="24" name="Check"></lucide-icon>
+        Замовлення оформлено! Переходимо до акаунту...
+      </div>
+    }
+
+    @if (error) {
+      <div class="error-banner">{{ error }}</div>
+    }
+
+    @if (items.length === 0 && !success) {
+      <div class="empty-cart">
+        <lucide-icon [size]="64" name="ShoppingCart"></lucide-icon>
+        <p>Кошик порожній</p>
+        <a routerLink="/" class="go-catalog-btn">До каталогу</a>
+      </div>
+    }
+
+    @if (items.length > 0) {
+      <div class="cart-items">
+        @for (item of items; track item.product.id) {
+          <div class="cart-item">
+            <div class="item-image">
+              @if (item.product.imageUrl) {
+                <img [src]="item.product.imageUrl" [alt]="item.product.name">
+              } @else {
+                <lucide-icon [size]="32" name="Package"></lucide-icon>
+              }
+            </div>
+            <div class="item-info">
+              <span class="item-name">{{ item.product.name }}</span>
+              <span class="item-price-unit">{{ formatPrice(item.product.price) }} / шт.</span>
+            </div>
+            <div class="quantity-controls">
+              <button (click)="decrease(item)">−</button>
+              <span>{{ item.quantity }}</span>
+              <button (click)="increase(item)">+</button>
+            </div>
+            <span class="item-total">{{ formatPrice(item.product.price * item.quantity) }}</span>
+            <button class="remove-btn" (click)="remove(item)">
+              <lucide-icon [size]="18" name="Trash2"></lucide-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Разом:</span>
+          <strong>{{ formatPrice(total) }}</strong>
+        </div>
+        <button class="checkout-btn" (click)="checkout()" [disabled]="loading">
+          {{ loading ? 'Оформлення...' : 'Оформити замовлення' }}
+        </button>
+      </div>
+    }
+  </div>
+</div>

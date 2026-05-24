@@ -1,1 +1,76 @@
-<p>account-pages works!</p>
+<div class="account-page">
+  <div class="account-container">
+    <div class="account-header">
+      <div>
+        <h1>Мій акаунт</h1>
+        <p class="user-email">{{ userEmail }}</p>
+      </div>
+      <div class="header-links">
+        @if (isAdmin) {
+          <a routerLink="/admin" class="admin-link">
+            <lucide-icon [size]="16" name="Package"></lucide-icon>
+            Адмін панель
+          </a>
+        }
+        <a routerLink="/cart" class="cart-link-btn">
+          <lucide-icon [size]="16" name="ShoppingCart"></lucide-icon>
+          Кошик
+        </a>
+      </div>
+    </div>
+
+    <h2 class="section-title">Мої замовлення</h2>
+
+    <div class="status-tabs">
+      @for (tab of tabs; track tab.key) {
+        <button
+          class="tab-btn"
+          [class.active]="activeTab === tab.key"
+          (click)="setTab(tab.key)">
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+
+    @if (loading) {
+      <div class="state-msg">Завантаження...</div>
+    }
+
+    @if (error) {
+      <div class="state-msg error">{{ error }}</div>
+    }
+
+    @if (!loading && !error && orders.length === 0) {
+      <div class="empty-orders">
+        <lucide-icon [size]="56" name="ShoppingCart"></lucide-icon>
+        <p>
+          @if (activeTab === 'ALL') { У вас ще немає замовлень }
+          @else { Замовлень з таким статусом немає }
+        </p>
+        @if (activeTab === 'ALL') {
+          <a routerLink="/" class="go-catalog-btn">До каталогу</a>
+        }
+      </div>
+    }
+
+    @if (orders.length > 0) {
+      <div class="orders-list">
+        @for (order of orders; track order.id) {
+          <div class="order-card">
+            <div class="order-info">
+              <span class="order-product">{{ order.productName }}</span>
+              <span class="order-meta">Кількість: {{ order.quantity }} шт.</span>
+              <span class="order-meta">{{ formatDate(order.createdAt) }}</span>
+            </div>
+            <div class="order-right">
+              <span class="order-price">{{ formatPrice(order.totalPrice) }}</span>
+              <span class="order-status" [class]="'status-' + order.status.toLowerCase()">
+                {{ statusLabel(order.status) }}
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

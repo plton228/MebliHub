@@ -1,0 +1,194 @@
+.account-page {
+  min-height: calc(100vh - 15vh);
+  background: var(--color-bg-main);
+  padding: 48px 24px 80px;
+
+  .account-container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .account-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    h1 {
+      font-family: 'Playfair Display';
+      font-size: 2.2rem;
+      color: var(--color-text-main);
+    }
+
+    .user-email {
+      font-family: 'Inter';
+      font-size: 14px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .header-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 18px;
+        border-radius: 8px;
+        font-family: 'Inter';
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+
+      .admin-link {
+        background: var(--color-accent-emerald);
+        color: var(--color-bg-main);
+        &:hover { background: var(--color-accent-dark-emerald); }
+      }
+
+      .cart-link-btn {
+        background: var(--color-bg-surface);
+        color: var(--color-text-main);
+        border: 2px solid #ddd5cc;
+        &:hover { border-color: var(--color-accent-emerald); }
+      }
+    }
+  }
+
+  .section-title {
+    font-family: 'Playfair Display';
+    font-size: 1.5rem;
+    color: var(--color-text-main);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-bg-surface);
+  }
+
+  .status-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+
+    .tab-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 2px solid #ddd5cc;
+      background: var(--color-bg-surface);
+      color: #888;
+      font-family: 'Inter';
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover { border-color: var(--color-accent-emerald); color: var(--color-accent-emerald); }
+
+      &.active {
+        background: var(--color-accent-emerald);
+        border-color: var(--color-accent-emerald);
+        color: var(--color-bg-main);
+      }
+    }
+  }
+
+  .state-msg {
+    font-family: 'Inter';
+    color: #888;
+    padding: 40px 0;
+    text-align: center;
+
+    &.error { color: var(--color-accent-sale); }
+  }
+
+  .empty-orders {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 60px 0;
+    color: #aaa;
+
+    p { font-family: 'Inter'; font-size: 1.1rem; }
+
+    .go-catalog-btn {
+      padding: 10px 24px;
+      background: var(--color-accent-emerald);
+      color: var(--color-bg-main);
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Inter';
+      font-size: 14px;
+      transition: background 0.2s;
+      &:hover { background: var(--color-accent-dark-emerald); }
+    }
+  }
+
+  .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .order-card {
+    background: var(--color-bg-surface);
+    border-radius: 12px;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+    .order-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .order-product {
+        font-family: 'Playfair Display';
+        font-size: 1.05rem;
+        color: var(--color-text-main);
+      }
+
+      .order-meta {
+        font-family: 'Inter';
+        font-size: 13px;
+        color: #888;
+      }
+    }
+
+    .order-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+
+      .order-price {
+        font-family: 'Inter';
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--color-accent-emerald);
+      }
+
+      .order-status {
+        font-family: 'Inter';
+        font-size: 12px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 20px;
+
+        &.status-confirmed { background: #d4edda; color: #2d6a4f; }
+        &.status-pending { background: #fff3cd; color: #856404; }
+        &.status-cancelled { background: #f8d7da; color: #842029; }
+      }
+    }
+  }
+}

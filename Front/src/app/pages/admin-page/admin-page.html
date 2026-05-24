@@ -1,0 +1,229 @@
+<div class="admin-page">
+  <div class="admin-container">
+    <div class="admin-header">
+      <div>
+        <h1>Адмін панель</h1>
+        <p class="subtitle">Управління товарами та аналітика</p>
+      </div>
+      <div class="header-actions">
+        <button class="add-btn" (click)="openAdd()">
+          <lucide-icon [size]="16" name="Plus"></lucide-icon>
+          Додати товар
+        </button>
+        <a routerLink="/account" class="account-link">Мій акаунт</a>
+      </div>
+    </div>
+
+    @if (successMsg) {
+      <div class="success-banner">
+        <lucide-icon [size]="16" name="Check"></lucide-icon>
+        {{ successMsg }}
+      </div>
+    }
+    @if (error) {
+      <div class="error-banner">{{ error }}</div>
+    }
+
+    <!-- Stats Dashboard -->
+    @if (!statsLoading && (productStats || orderStats)) {
+      <div class="stats-section">
+        <h2 class="stats-title">Аналітика</h2>
+
+        <div class="stats-grid">
+          @if (productStats) {
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <lucide-icon [size]="20" name="Package"></lucide-icon>
+                <span>Товари</span>
+              </div>
+              <div class="stat-rows">
+                <div class="stat-row">
+                  <span class="stat-label">Всього товарів</span>
+                  <span class="stat-value primary">{{ productStats.totalCount }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Загальний залишок</span>
+                  <span class="stat-value">{{ productStats.totalStock }} шт.</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Мін. ціна</span>
+                  <span class="stat-value">{{ formatPrice(productStats.minPrice) }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Макс. ціна</span>
+                  <span class="stat-value">{{ formatPrice(productStats.maxPrice) }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Середня ціна</span>
+                  <span class="stat-value accent">{{ formatPrice(productStats.avgPrice) }}</span>
+                </div>
+              </div>
+            </div>
+          }
+
+          @if (orderStats) {
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <lucide-icon [size]="20" name="ShoppingCart"></lucide-icon>
+                <span>Замовлення</span>
+              </div>
+              <div class="stat-rows">
+                <div class="stat-row">
+                  <span class="stat-label">Всього замовлень</span>
+                  <span class="stat-value primary">{{ orderStats.totalOrders }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Виручка</span>
+                  <span class="stat-value accent">{{ formatPrice(orderStats.totalRevenue) }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Підтверджено</span>
+                  <span class="stat-value confirmed">{{ orderStats.confirmedCount }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Очікує</span>
+                  <span class="stat-value pending">{{ orderStats.pendingCount }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Скасовано</span>
+                  <span class="stat-value cancelled">{{ orderStats.cancelledCount }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        @if (revenueByProduct.length > 0) {
+          <div class="revenue-table-card">
+            <h3 class="revenue-title">Виручка по товарах (GROUP BY агрегація)</h3>
+            <div class="revenue-table-wrapper">
+              <table class="revenue-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Товар</th>
+                    <th>Замовлень</th>
+                    <th>Виручка</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (row of revenueByProduct; track row.productId; let i = $index) {
+                    <tr>
+                      <td class="col-rank">{{ i + 1 }}</td>
+                      <td class="col-product-name">{{ row.productName }}</td>
+                      <td class="col-count">{{ row.orderCount }}</td>
+                      <td class="col-revenue">{{ formatPrice(row.totalRevenue) }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    @if (showForm) {
+      <div class="product-form-card">
+        <h2>{{ editingId ? 'Редагувати товар' : 'Новий товар' }}</h2>
+
+        @if (formError) {
+          <div class="form-error">{{ formError }}</div>
+        }
+
+        <div class="form-grid">
+          <div class="field">
+            <label>Назва *</label>
+            <input type="text" [(ngModel)]="form.name" placeholder="Диван 'Комфорт'">
+          </div>
+          <div class="field">
+            <label>Ціна (грн) *</label>
+            <input type="number" [(ngModel)]="form.price" placeholder="12500" min="0">
+          </div>
+          <div class="field full-width">
+            <label>Опис</label>
+            <textarea [(ngModel)]="form.description" rows="3" placeholder="Опис товару..."></textarea>
+          </div>
+          <div class="field">
+            <label>URL зображення</label>
+            <input type="text" [(ngModel)]="form.imageUrl" placeholder="https://...">
+          </div>
+          <div class="field">
+            <label>Кількість в наявності</label>
+            <input type="number" [(ngModel)]="form.stock" placeholder="10" min="0">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="save-btn" (click)="saveProduct()">
+            <lucide-icon [size]="16" name="Check"></lucide-icon>
+            Зберегти
+          </button>
+          <button class="cancel-btn" (click)="cancelForm()">
+            <lucide-icon [size]="16" name="X"></lucide-icon>
+            Скасувати
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (loading) {
+      <div class="state-msg">Завантаження...</div>
+    }
+
+    @if (!loading && products.length === 0) {
+      <div class="state-msg">Товарів немає. Додайте перший!</div>
+    }
+
+    @if (products.length > 0) {
+      <div class="products-table-wrapper">
+        <table class="products-table">
+          <thead>
+            <tr>
+              <th>Фото</th>
+              <th>Назва</th>
+              <th>Ціна</th>
+              <th>Залишок</th>
+              <th>Дії</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of products; track p.id) {
+              <tr>
+                <td class="col-img">
+                  @if (p.imageUrl) {
+                    <img [src]="p.imageUrl" [alt]="p.name">
+                  } @else {
+                    <div class="no-img"><lucide-icon [size]="20" name="Package"></lucide-icon></div>
+                  }
+                </td>
+                <td>
+                  <div class="product-name-cell">{{ p.name }}</div>
+                  @if (p.description) {
+                    <div class="product-desc-cell">{{ p.description }}</div>
+                  }
+                </td>
+                <td class="col-price">{{ formatPrice(p.price) }}</td>
+                <td class="col-stock">
+                  @if (p.stock !== undefined && p.stock !== null) {
+                    <span [class.low-stock]="p.stock <= 5">{{ p.stock }} шт.</span>
+                  } @else {
+                    <span class="no-stock-info">—</span>
+                  }
+                </td>
+                <td class="col-actions">
+                  <button class="edit-btn" (click)="openEdit(p)" title="Редагувати">
+                    <lucide-icon [size]="16" name="Pencil"></lucide-icon>
+                  </button>
+                  <button class="del-btn" (click)="deleteProduct(p)" title="Видалити">
+                    <lucide-icon [size]="16" name="Trash2"></lucide-icon>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

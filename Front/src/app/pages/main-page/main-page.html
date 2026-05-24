@@ -1,1 +1,92 @@
-<p>main-page works!</p>
+<app-hero-section></app-hero-section>
+
+<section id="catalog" class="catalog-section">
+  <div class="catalog-header">
+    <h2>Каталог меблів</h2>
+  </div>
+
+  <div class="filter-panel">
+    <div class="filter-row">
+      <div class="filter-search-box">
+        <lucide-icon [size]="16" name="Search"></lucide-icon>
+        <input
+          type="text"
+          [(ngModel)]="filterName"
+          placeholder="Назва або опис..."
+          (keydown.enter)="applySearch()">
+      </div>
+
+      <div class="filter-price-group">
+        <input type="number" [(ngModel)]="filterMinPrice" placeholder="Ціна від" min="0">
+        <span class="price-sep">—</span>
+        <input type="number" [(ngModel)]="filterMaxPrice" placeholder="Ціна до" min="0">
+      </div>
+
+      <label class="filter-checkbox">
+        <input type="checkbox" [(ngModel)]="filterInStockOnly">
+        <span>Тільки в наявності</span>
+      </label>
+
+      <div class="filter-actions">
+        <button class="search-btn" (click)="applySearch()">
+          <lucide-icon [size]="15" name="Search"></lucide-icon>
+          Пошук
+        </button>
+        @if (searchMode) {
+          <button class="reset-btn" (click)="resetFilters()">
+            <lucide-icon [size]="15" name="X"></lucide-icon>
+            Скинути
+          </button>
+        }
+      </div>
+    </div>
+
+    @if (searchMode) {
+      <p class="search-result-info">
+        Знайдено {{ page?.totalElements ?? 0 }} результатів
+      </p>
+    }
+  </div>
+
+  @if (error) {
+    <div class="error-msg">{{ error }}</div>
+  }
+
+  @if (!page && !error) {
+    <div class="loading">Завантаження...</div>
+  }
+
+  @if (page) {
+    @if (displayedProducts.length === 0) {
+      <div class="empty-msg">
+        <lucide-icon [size]="48" name="Package"></lucide-icon>
+        <p>Товарів не знайдено</p>
+      </div>
+    } @else {
+      <div class="products-grid">
+        @for (product of displayedProducts; track product.id) {
+          <app-product-card
+            [product]="product"
+            (addToCart)="addToCart($event)">
+          </app-product-card>
+        }
+      </div>
+    }
+
+    @if (totalPages > 1) {
+      <div class="pagination">
+        <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 0">
+          <lucide-icon [size]="18" name="ChevronLeft"></lucide-icon>
+        </button>
+        @for (p of pages; track p) {
+          <button [class.active]="p === currentPage" (click)="goToPage(p)">
+            {{ p + 1 }}
+          </button>
+        }
+        <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">
+          <lucide-icon [size]="18" name="ChevronRight"></lucide-icon>
+        </button>
+      </div>
+    }
+  }
+</section>

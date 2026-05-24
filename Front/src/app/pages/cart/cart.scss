@@ -1,0 +1,206 @@
+.cart-page {
+  min-height: calc(100vh - 15vh);
+  background: var(--color-bg-main);
+  padding: 48px 24px 80px;
+
+  .cart-container {
+    max-width: 800px;
+    margin: 0 auto;
+
+    h1 {
+      font-family: 'Playfair Display';
+      font-size: 2.2rem;
+      color: var(--color-text-main);
+      margin-bottom: 32px;
+    }
+  }
+
+  .success-banner, .error-banner {
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'Inter';
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .success-banner {
+    background: #d4edda;
+    color: #2d6a4f;
+  }
+
+  .error-banner {
+    background: #f8d7da;
+    color: #842029;
+  }
+
+  .empty-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 80px 0;
+    color: #aaa;
+
+    p { font-family: 'Inter'; font-size: 1.2rem; }
+
+    .go-catalog-btn {
+      padding: 12px 28px;
+      background: var(--color-accent-emerald);
+      color: var(--color-bg-main);
+      border-radius: 10px;
+      text-decoration: none;
+      font-family: 'Inter';
+      font-size: 15px;
+      transition: background 0.2s;
+      &:hover { background: var(--color-accent-dark-emerald); }
+    }
+  }
+
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  .cart-item {
+    background: var(--color-bg-surface);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+    .item-image {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      background: #ece7e0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #b0a898;
+
+      img { width: 100%; height: 100%; object-fit: cover; }
+    }
+
+    .item-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .item-name {
+        font-family: 'Playfair Display';
+        font-size: 1rem;
+        color: var(--color-text-main);
+      }
+
+      .item-price-unit {
+        font-family: 'Inter';
+        font-size: 13px;
+        color: #888;
+      }
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 2px solid #ddd5cc;
+      border-radius: 8px;
+      overflow: hidden;
+
+      button {
+        width: 34px;
+        height: 34px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: var(--color-text-main);
+        transition: background 0.15s;
+
+        &:hover { background: #ece7e0; }
+      }
+
+      span {
+        width: 36px;
+        text-align: center;
+        font-family: 'Inter';
+        font-size: 15px;
+      }
+    }
+
+    .item-total {
+      font-family: 'Inter';
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--color-accent-emerald);
+      min-width: 100px;
+      text-align: right;
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #ccc;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      display: flex;
+      transition: color 0.2s, background 0.2s;
+
+      &:hover { color: var(--color-accent-sale); background: #fdf0ec; }
+    }
+  }
+
+  .cart-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0;
+    border-top: 2px solid var(--color-bg-surface);
+    flex-wrap: wrap;
+    gap: 16px;
+
+    .cart-total {
+      font-family: 'Inter';
+      font-size: 1.1rem;
+      color: var(--color-text-main);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      strong {
+        font-size: 1.4rem;
+        color: var(--color-accent-emerald);
+      }
+    }
+
+    .checkout-btn {
+      padding: 14px 36px;
+      background: var(--color-accent-emerald);
+      color: var(--color-bg-main);
+      border: none;
+      border-radius: 10px;
+      font-family: 'Inter';
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+
+      &:hover:not(:disabled) {
+        background: var(--color-accent-dark-emerald);
+        transform: translateY(-1px);
+      }
+
+      &:disabled { opacity: 0.55; cursor: not-allowed; }
+    }
+  }
+}
